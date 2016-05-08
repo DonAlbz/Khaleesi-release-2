@@ -10,6 +10,7 @@ import inputDati.MyMenu;
 public class Partita {
 	private Map<Point, AbstractObject> casella = new HashMap<>();
 	private Guerriero guerriero;
+	private Stato stato;
 	private boolean continuare = true;
 	private String RICHIESTA_CONTINUAZIONE = "Vuoi continuare la partita?";
 	private String RICHIESTA_SPOSTAMENTO = "Seleziona una direzione di movimento del guerriero";
@@ -18,17 +19,24 @@ public class Partita {
 	private String ERRORE_SPOSTAMENTO = "Errore: il guerriero non è stato spostato nella direzione indicata";
 	
 	public Partita() {
-		creaCasella(new Point(0,0), null);
-		guerriero = new Guerriero();		
+		creaCasella(new Point(0,0), null); //inizializza la casella iniziale vuota
+		guerriero = new Guerriero();	
+		stato= new Disarmato(this);
 	}
 	
 	public void start() {
-		while (continuare){
+		richiediSpostamento();
+		while (continuare){	
+			System.out.println(contenutoCasellaToString(guerriero.getPosizione()));
+			stato.eseguiAzione();
 			richiediSpostamento();
 		}
+		//System.out.println(casella);//Stampa la mappa
 	}
 
-
+	/**Permette all'utente di decidere la direzione di spostamento del {@link #guerriero}
+	 * 
+	 */
 	private void richiediSpostamento() {
 		assert guerriero.getPosizione()!=null;
 		Point posizioneVecchia= new Point(guerriero.getPosizione());
@@ -59,7 +67,6 @@ public class Partita {
 		default:
 			assert false;
 		}
-		
 	}
 	
 	/**Permette di effettuare uno spostamento differenziale dalla posizione in cui si trova il guerriero
@@ -71,21 +78,53 @@ public class Partita {
 		if(!esisteCasella(guerriero.getPosizione())){
 			Point newPosizione = new Point();
 			newPosizione.setLocation(guerriero.getPosizione());
-			creaCasella(newPosizione,null);
+			creaCasella(newPosizione,ObjectFactory.creaContenutoCasella());
 		}		
 	}
 
+	/**Serve sia a creare una casella, sia a modificare il contenuto di una casella gia' presente
+	 * @param coordinate
+	 * @param abstractObject
+	 */
 	private void creaCasella(Point coordinate, AbstractObject abstractObject){
 		casella.put(coordinate, abstractObject);	
+	}
+	
+	/**Ridondante, ma il metodo ha un nome piu' comprensibile dall'esterno
+	 * @param coordinate
+	 * @param abstractObject
+	 */
+	public void modificaCasella(Point coordinate, AbstractObject abstractObject){
+		creaCasella(coordinate, abstractObject);
 	}
 
 	private Boolean esisteCasella(Point coordinate){
 		return casella.containsKey(coordinate);
 	}
 
-	private AbstractObject contenutoCasella(Point coordinate){
+	public Boolean isVuota(Point coordinate){
+		return casella.get(coordinate)==null;
+	}
+	
+	public AbstractObject contenutoCasella(Point coordinate){
 		return casella.get(coordinate);
-
+	}
+	
+	private String contenutoCasellaToString(Point coordinate){
+		if(contenutoCasella(coordinate)!=null)
+			return contenutoCasella(coordinate).getNomeOggetto();
+		else
+			return Visualizzatore.VUOTO;		
 	}
 
+	public void setStato(Stato stato){
+		this.stato=stato;
+	}
+	/**
+	 * @return the guerriero
+	 */
+	public Guerriero getGuerriero() {
+		return guerriero;
+	}
+	
 }

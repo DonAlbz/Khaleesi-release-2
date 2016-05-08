@@ -6,19 +6,18 @@ public class Main {
 		benvenuto();
 		Partita partita = new Partita();
 		partita.start();
-		saluti();
-	}
-
-	private static void saluti() {
-		// TODO Auto-generated method stub
-		
+		arrivederci();
 	}
 
 	private static void benvenuto() {
-		// TODO Auto-generated method stub
+		Visualizzatore.printBenvenuto();
 		
 	}
 	
+	private static void arrivederci() {
+		Visualizzatore.printArrivederci();
+		
+	}
 	
 			
 		
