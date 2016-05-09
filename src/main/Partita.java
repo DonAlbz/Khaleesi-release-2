@@ -27,7 +27,6 @@ public class Partita {
 	public void start() {
 		richiediSpostamento();
 		while (continuare){	
-			System.out.println(contenutoCasellaToString(guerriero.getPosizione()));
 			stato.eseguiAzione();
 			richiediSpostamento();
 		}
