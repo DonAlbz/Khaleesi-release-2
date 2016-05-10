@@ -30,8 +30,9 @@ public class Armato  extends AbstractStato{
 			else if(oggetto.getClass()==Pozione.class){
 				trovataPozione((Pozione)oggetto);
 			}
-			else
+			else if (oggetto.getClass()!=Arma.class){
 				assert false;
+			}
 		}
 		else 
 			scegliDrop((guerriero.getArma()));				
