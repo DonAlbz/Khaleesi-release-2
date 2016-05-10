@@ -22,6 +22,7 @@ public class Visualizzatore {
 	private static final String GUERRIERO_CURATO="%s e' stato curato di %d punti ferita.\nOra la sua salute ammonta a %d punti ferita.\n";
 	private static final String ARRIVEDERCI = "Grazie per aver giocato a The Shandon Adventure!";
 	private static final String BENVENUTO = "Benvenuto in The Shandon Adventure!";
+	private static final String MORTO = "Sfortunatamente il tuo guerriero e' morto.";
 	
 	
 	public static boolean scegliRaccoltaArma(String nomeOggetto){
@@ -53,6 +54,10 @@ public class Visualizzatore {
 		System.out.printf(GUERRIERO_CURATO, nome, totaleCura, puntiVita);		
 	}
 
+	public static void morto() {
+		System.out.println(MORTO);			
+	}
+	
 	public static void printBenvenuto() {
 		System.out.println(BENVENUTO );		
 	}

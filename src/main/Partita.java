@@ -28,7 +28,8 @@ public class Partita {
 		richiediSpostamento();
 		while (continuare){	
 			stato.eseguiAzione();
-			richiediSpostamento();
+			if(continuare)
+				richiediSpostamento();
 		}
 		//System.out.println(casella);//Stampa la mappa
 	}
@@ -124,6 +125,13 @@ public class Partita {
 	 */
 	public Guerriero getGuerriero() {
 		return guerriero;
+	}
+
+	/**
+	 * @param continuare the continuare to set
+	 */
+	public void setContinuare(boolean continuare) {
+		this.continuare = continuare;
 	}
 	
 }
